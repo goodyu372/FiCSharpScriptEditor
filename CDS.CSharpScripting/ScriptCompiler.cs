@@ -120,6 +120,7 @@ namespace CDS.CSharpScripting
             Compilation compilation = compiledScript.GetCompilation();
 
             var var = compilation.Assembly;
+            
             var var2 = compilation.AssemblyName; 
 
             var diagnostics = compilation.GetDiagnostics();

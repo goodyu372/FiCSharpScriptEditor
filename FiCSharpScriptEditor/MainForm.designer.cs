@@ -57,6 +57,7 @@ namespace FiCSharpScriptEditor
 		{
             this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fileNewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fileOpenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fileCloseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fileExitToolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
@@ -73,8 +74,8 @@ namespace FiCSharpScriptEditor
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.referencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.fileNewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fileTabControl = new System.Windows.Forms.TabControl();
+            this.引用系统dllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -104,6 +105,13 @@ namespace FiCSharpScriptEditor
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(56, 28);
             this.fileToolStripMenuItem.Text = "&File";
+            // 
+            // fileNewToolStripMenuItem
+            // 
+            this.fileNewToolStripMenuItem.Name = "fileNewToolStripMenuItem";
+            this.fileNewToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.fileNewToolStripMenuItem.Text = "&New...";
+            this.fileNewToolStripMenuItem.Visible = false;
             // 
             // fileOpenToolStripMenuItem
             // 
@@ -150,62 +158,63 @@ namespace FiCSharpScriptEditor
             // 
             this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
             this.undoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-            this.undoToolStripMenuItem.Size = new System.Drawing.Size(280, 34);
+            this.undoToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.undoToolStripMenuItem.Text = "&Undo";
             // 
             // redoToolStripMenuItem
             // 
             this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
             this.redoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
-            this.redoToolStripMenuItem.Size = new System.Drawing.Size(280, 34);
+            this.redoToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.redoToolStripMenuItem.Text = "&Redo";
             // 
             // redoSeparatorToolStripMenuItem
             // 
             this.redoSeparatorToolStripMenuItem.Name = "redoSeparatorToolStripMenuItem";
-            this.redoSeparatorToolStripMenuItem.Size = new System.Drawing.Size(277, 6);
+            this.redoSeparatorToolStripMenuItem.Size = new System.Drawing.Size(267, 6);
             // 
             // cutToolStripMenuItem
             // 
             this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
             this.cutToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.cutToolStripMenuItem.Size = new System.Drawing.Size(280, 34);
+            this.cutToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.cutToolStripMenuItem.Text = "Cu&t";
             // 
             // copyToolStripMenuItem
             // 
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
             this.copyToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(280, 34);
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.copyToolStripMenuItem.Text = "&Copy";
             // 
             // pasteToolStripMenuItem
             // 
             this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
             this.pasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(280, 34);
+            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.pasteToolStripMenuItem.Text = "&Paste";
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(280, 34);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.deleteToolStripMenuItem.Text = "&Delete";
             // 
             // selectAllSeparatorToolStripMenuItem
             // 
             this.selectAllSeparatorToolStripMenuItem.Name = "selectAllSeparatorToolStripMenuItem";
-            this.selectAllSeparatorToolStripMenuItem.Size = new System.Drawing.Size(277, 6);
+            this.selectAllSeparatorToolStripMenuItem.Size = new System.Drawing.Size(267, 6);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(277, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(267, 6);
             // 
             // toolsToolStripMenuItem
             // 
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.referencesToolStripMenuItem});
+            this.referencesToolStripMenuItem,
+            this.引用系统dllToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(71, 28);
             this.toolsToolStripMenuItem.Text = "&Tools";
@@ -214,14 +223,7 @@ namespace FiCSharpScriptEditor
             // 
             this.referencesToolStripMenuItem.Name = "referencesToolStripMenuItem";
             this.referencesToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
-            this.referencesToolStripMenuItem.Text = "&References...";
-            // 
-            // fileNewToolStripMenuItem
-            // 
-            this.fileNewToolStripMenuItem.Name = "fileNewToolStripMenuItem";
-            this.fileNewToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
-            this.fileNewToolStripMenuItem.Text = "&New...";
-            this.fileNewToolStripMenuItem.Visible = false;
+            this.referencesToolStripMenuItem.Text = "引用本地dll";
             // 
             // fileTabControl
             // 
@@ -234,6 +236,12 @@ namespace FiCSharpScriptEditor
             this.fileTabControl.SelectedIndex = 0;
             this.fileTabControl.Size = new System.Drawing.Size(1371, 1002);
             this.fileTabControl.TabIndex = 1;
+            // 
+            // 引用系统dllToolStripMenuItem
+            // 
+            this.引用系统dllToolStripMenuItem.Name = "引用系统dllToolStripMenuItem";
+            this.引用系统dllToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.引用系统dllToolStripMenuItem.Text = "引用系统dll";
             // 
             // MainForm
             // 
@@ -275,5 +283,6 @@ namespace FiCSharpScriptEditor
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem fileNewToolStripMenuItem;
         private System.Windows.Forms.TabControl fileTabControl;
+        private System.Windows.Forms.ToolStripMenuItem 引用系统dllToolStripMenuItem;
     }
 }
