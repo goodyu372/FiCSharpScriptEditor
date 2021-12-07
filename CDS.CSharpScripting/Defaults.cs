@@ -31,7 +31,8 @@ namespace CDS.CSharpScripting
             typeof(System.IO.Directory), //mscorlib.dll
             typeof(System.IO.BinaryReader), //mscorlib.dll
             typeof(System.Reflection.Assembly), //mscorlib.dll
-            //typeof(System.Drawing.Point), //System.Drawing.dll
+            typeof(System.Drawing.Point), //System.Drawing.dll
+            typeof(System.Drawing.Color), //System.Drawing.dll
             typeof(System.Windows.Forms.Form), //System.Windows.Forms.dll
             typeof(System.Collections.Generic.List<int>),  //mscorlib.dll  (System.Collections.Generic),
             typeof(System.Array), //mscorlib.dll

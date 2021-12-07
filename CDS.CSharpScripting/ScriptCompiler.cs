@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis.CSharp.Scripting;
+﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.Scripting;
 using System;
 using System.Collections.Generic;
@@ -78,6 +79,8 @@ namespace CDS.CSharpScripting
             Type[] referenceTypes,
             Type typeOfGlobals)
         {
+            return Compile(script, referenceTypes);
+
             GC.Collect();
 
             var scriptOptions = ScriptOptions.Default.WithImports(namespaceTypes.Select(r => r.Namespace));
@@ -94,6 +97,34 @@ namespace CDS.CSharpScripting
             var compilationWrapper = new CompiledScript(
                 compiledScript,
                 diagnostics);
+
+            return compilationWrapper;
+        }
+
+        public static CompiledScript Compile(string script, Type[] referenceTypes)
+        {
+            IEnumerable<Assembly> assemblies = referenceTypes.Select(a => a.Assembly);
+
+            return Compile(script, assemblies);
+        }
+
+        public static CompiledScript Compile(string script, IEnumerable<Assembly> referenceAssemblies)
+        {
+            GC.Collect();
+
+            var scriptOptions = ScriptOptions.Default.AddReferences(referenceAssemblies.Distinct()); //注意这里Assembly去重
+
+            var compiledScript = CSharpScript.Create(script, options: scriptOptions);
+            
+            compiledScript.Compile();
+            Compilation compilation = compiledScript.GetCompilation();
+
+            var var = compilation.Assembly;
+            var var2 = compilation.AssemblyName; 
+
+            var diagnostics = compilation.GetDiagnostics();
+
+            var compilationWrapper = new CompiledScript(compiledScript, diagnostics);
 
             return compilationWrapper;
         }
