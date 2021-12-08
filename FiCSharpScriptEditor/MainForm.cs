@@ -119,7 +119,11 @@ namespace FiCSharpScriptEditor
         {
             if (this.ActiveFiCodeEditor != null)
             {
-				this.ActiveFiCodeEditor.Text = CSharpFormatHelper.FormatCSharpCode(this.ActiveFiCodeEditor.Text);
+				string formatText = CSharpFormatHelper.FormatCSharpCode(this.ActiveFiCodeEditor.Text);
+                if (this.ActiveFiCodeEditor.Text != formatText)
+                {
+					this.ActiveFiCodeEditor.Text = formatText;
+				}
 			}
 		}
 

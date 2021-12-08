@@ -147,8 +147,8 @@ namespace FiCSharpScriptEditor
 
             this.editor.IsBraceCompletionEnabled = true;
             this.editor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("C#");
-            this.editor.FontFamily = new System.Windows.Media.FontFamily(this.Font.FontFamily.Name);
-            this.editor.FontSize = this.Font.Size * 96 / 72;
+            //this.editor.FontFamily = new System.Windows.Media.FontFamily(this.Font.FontFamily.Name);
+            //this.editor.FontSize = this.Font.Size * 96 / 72;
             this.editor.Options.HighlightCurrentLine = true;
             this.editor.Encoding = System.Text.Encoding.UTF8;
             this.editor.TextChanged += Editor_TextChanged;

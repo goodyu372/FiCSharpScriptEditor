@@ -17,6 +17,7 @@ namespace FiCSharpScriptEditor
         {
             return Regex.Replace(lines, @"^\s*$\n|\r", "", RegexOptions.Multiline).TrimEnd();
         }
+
         //Indent String with Spaces
         public static string Indent(int count)
         {
@@ -45,7 +46,7 @@ namespace FiCSharpScriptEditor
             string[] lines = code.Split('\n');
             foreach (var line in lines)
             {
-                if (line.TrimStart().StartsWith("{") || line.TrimEnd().EndsWith("{"))
+                if (line.TrimStart().StartsWith("{") || (!line.Contains("//") && line.TrimEnd().EndsWith("{")))
                 {
                     sb.Append(Indent(count * times) + line.TrimStart() + "\n");
                     times++;
