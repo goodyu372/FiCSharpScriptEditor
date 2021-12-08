@@ -46,7 +46,10 @@ namespace FiCSharpScriptEditor
             string[] lines = code.Split('\n');
             foreach (var line in lines)
             {
-                if (line.TrimStart().StartsWith("{") || (!line.Contains("//") && line.TrimEnd().EndsWith("{")))
+                bool condition1 = line.TrimEnd().EndsWith("{"); //必须以{大括号结尾
+                bool condition2 = !line.Contains("//"); //不包含注释符
+
+                if (line.TrimStart().StartsWith("{") || (condition1 && condition2))
                 {
                     sb.Append(Indent(count * times) + line.TrimStart() + "\n");
                     times++;
