@@ -41,7 +41,7 @@ namespace FiCSharpScriptEditor
 			return null;
 		}
 
-		public void TaskFileOpen(string csFileFullName)
+		public void OpenOrLoadFile(string csFileFullName)
 		{
             if (!File.Exists(csFileFullName))
             {
@@ -72,6 +72,7 @@ namespace FiCSharpScriptEditor
 			fiCodeEditorTabPage.Text = name;
 
 			this.fileTabControl.TabPages.Add(fiCodeEditorTabPage);
+			this.fileTabControl.SelectedTab = fiCodeEditorTabPage;
 
 			// Load file
 			fiCodeEditor.Initialize();
@@ -79,7 +80,12 @@ namespace FiCSharpScriptEditor
 			fiCodeEditor.Focus();
 		}
 
-		public void Save() 
+		private void Save()
+		{
+			this.ActiveFiCodeEditor?.SaveFile();
+		}
+
+		public void SaveAll() 
 		{
 			foreach (FiCodeEditorTabPage fiCodeEditorTabPage in this.fileTabControl.TabPages)
 			{
@@ -134,5 +140,10 @@ namespace FiCSharpScriptEditor
 				this.fileTabControl.TabPages.Remove(this.ActiveFiEditorTabPage);
 			}
 		}
+
+        private void 保存ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Save();
+        }
     }
 }

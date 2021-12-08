@@ -59,7 +59,10 @@ namespace FiCSharpScriptEditor
             this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fileOpenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.fileCloseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.保存ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -68,7 +71,6 @@ namespace FiCSharpScriptEditor
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.referencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fileTabControl = new System.Windows.Forms.TabControl();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.mainMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -90,8 +92,10 @@ namespace FiCSharpScriptEditor
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileOpenToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.fileCloseToolStripMenuItem,
             this.toolStripSeparator1,
-            this.fileCloseToolStripMenuItem});
+            this.保存ToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(62, 28);
             this.fileToolStripMenuItem.Text = "文件";
@@ -104,13 +108,31 @@ namespace FiCSharpScriptEditor
             this.fileOpenToolStripMenuItem.Text = "打开";
             this.fileOpenToolStripMenuItem.Click += new System.EventHandler(this.fileOpenToolStripMenuItem_Click);
             // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(267, 6);
+            // 
             // fileCloseToolStripMenuItem
             // 
-            this.fileCloseToolStripMenuItem.Image = global::FiCSharpScriptEditor.Properties.Resources.关闭;
+            this.fileCloseToolStripMenuItem.Image = global::FiCSharpScriptEditor.Properties.Resources.删除3;
             this.fileCloseToolStripMenuItem.Name = "fileCloseToolStripMenuItem";
             this.fileCloseToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.fileCloseToolStripMenuItem.Text = "关闭";
             this.fileCloseToolStripMenuItem.Click += new System.EventHandler(this.fileCloseToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(267, 6);
+            // 
+            // 保存ToolStripMenuItem
+            // 
+            this.保存ToolStripMenuItem.Image = global::FiCSharpScriptEditor.Properties.Resources.锁;
+            this.保存ToolStripMenuItem.Name = "保存ToolStripMenuItem";
+            this.保存ToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.保存ToolStripMenuItem.Text = "保存";
+            this.保存ToolStripMenuItem.Click += new System.EventHandler(this.保存ToolStripMenuItem_Click);
             // 
             // editToolStripMenuItem
             // 
@@ -128,7 +150,7 @@ namespace FiCSharpScriptEditor
             this.undoToolStripMenuItem.Image = global::FiCSharpScriptEditor.Properties.Resources.左箭头;
             this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
             this.undoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-            this.undoToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.undoToolStripMenuItem.Size = new System.Drawing.Size(211, 34);
             this.undoToolStripMenuItem.Text = "撤销";
             this.undoToolStripMenuItem.Click += new System.EventHandler(this.undoToolStripMenuItem_Click);
             // 
@@ -137,20 +159,20 @@ namespace FiCSharpScriptEditor
             this.redoToolStripMenuItem.Image = global::FiCSharpScriptEditor.Properties.Resources.右箭头;
             this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
             this.redoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
-            this.redoToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.redoToolStripMenuItem.Size = new System.Drawing.Size(211, 34);
             this.redoToolStripMenuItem.Text = "重做";
             this.redoToolStripMenuItem.Click += new System.EventHandler(this.redoToolStripMenuItem_Click);
             // 
             // selectAllSeparatorToolStripMenuItem
             // 
             this.selectAllSeparatorToolStripMenuItem.Name = "selectAllSeparatorToolStripMenuItem";
-            this.selectAllSeparatorToolStripMenuItem.Size = new System.Drawing.Size(267, 6);
+            this.selectAllSeparatorToolStripMenuItem.Size = new System.Drawing.Size(208, 6);
             // 
             // 格式化ToolStripMenuItem
             // 
             this.格式化ToolStripMenuItem.Image = global::FiCSharpScriptEditor.Properties.Resources.左对齐;
             this.格式化ToolStripMenuItem.Name = "格式化ToolStripMenuItem";
-            this.格式化ToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.格式化ToolStripMenuItem.Size = new System.Drawing.Size(211, 34);
             this.格式化ToolStripMenuItem.Text = "格式化代码";
             this.格式化ToolStripMenuItem.Click += new System.EventHandler(this.格式化ToolStripMenuItem_Click);
             // 
@@ -166,7 +188,7 @@ namespace FiCSharpScriptEditor
             // 
             this.referencesToolStripMenuItem.Image = global::FiCSharpScriptEditor.Properties.Resources.书1;
             this.referencesToolStripMenuItem.Name = "referencesToolStripMenuItem";
-            this.referencesToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.referencesToolStripMenuItem.Size = new System.Drawing.Size(208, 34);
             this.referencesToolStripMenuItem.Text = "程序集引用..";
             this.referencesToolStripMenuItem.Click += new System.EventHandler(this.referencesToolStripMenuItem_Click);
             // 
@@ -178,11 +200,6 @@ namespace FiCSharpScriptEditor
             this.fileTabControl.SelectedIndex = 0;
             this.fileTabControl.Size = new System.Drawing.Size(1399, 1113);
             this.fileTabControl.TabIndex = 1;
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(267, 6);
             // 
             // MainForm
             // 
@@ -218,5 +235,7 @@ namespace FiCSharpScriptEditor
         private System.Windows.Forms.TabControl fileTabControl;
         private System.Windows.Forms.ToolStripMenuItem 格式化ToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem 保存ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
     }
 }

@@ -43,7 +43,7 @@ namespace FiCSharpScriptEditor
             {
                 ReferenceManager.LoadData();
             }
-            Initialize(assemblyReferences: ReferenceManager.ListAssemblyReferences, typeNamespaceImports: ReferenceManager.DefaultTypesForNamespaces);
+            Initialize(assemblyReferences: ReferenceManager.ListAssemblyReferences, null);
         }
 
         /// <summary>
