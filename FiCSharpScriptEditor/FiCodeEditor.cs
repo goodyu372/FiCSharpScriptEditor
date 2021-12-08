@@ -143,7 +143,7 @@ namespace FiCSharpScriptEditor
             var workingDirectory = Directory.GetCurrentDirectory();
 
             this.editor = new RoslynCodeEditor();
-            this.editor.Initialize(roslynHost: roslynHost, highlightColors: new ClassificationHighlightColors(), workingDirectory: workingDirectory, documentText: "test");
+            this.editor.Initialize(roslynHost: roslynHost, highlightColors: new ClassificationHighlightColors(), workingDirectory: workingDirectory, documentText: String.Empty);
 
             this.editor.IsBraceCompletionEnabled = true;
             this.editor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("C#");

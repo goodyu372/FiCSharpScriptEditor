@@ -279,7 +279,7 @@ namespace CDS.CSharpScripting
                 roslynHost: roslynHost,
                 highlightColors: new ClassificationHighlightColors(),
                 workingDirectory: workingDirectory,
-                documentText: "test");
+                documentText: String.Empty);
 
             editor.IsBraceCompletionEnabled = true;
 
