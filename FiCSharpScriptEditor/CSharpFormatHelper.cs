@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace FiCSharpScriptEditor
 {
     /// <summary>
-    /// 格式化C#代码
+    /// 格式化C#代码助手
     /// </summary>
     public class CSharpFormatHelper 
     {
@@ -30,7 +30,11 @@ namespace FiCSharpScriptEditor
             }
         }
 
-        //格式化C#代码
+        /// <summary>
+        /// 格式化C#代码
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
         public static string FormatCSharpCode(string code)
         {
             //去除空白行

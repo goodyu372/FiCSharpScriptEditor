@@ -1,44 +1,18 @@
-﻿// SharpDevelop samples
-// Copyright (c) 2010, AlphaSierraPapa
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without modification, are
-// permitted provided that the following conditions are met:
-//
-// - Redistributions of source code must retain the above copyright notice, this list
-//   of conditions and the following disclaimer.
-//
-// - Redistributions in binary form must reproduce the above copyright notice, this list
-//   of conditions and the following disclaimer in the documentation and/or other materials
-//   provided with the distribution.
-//
-// - Neither the name of the SharpDevelop team nor the names of its contributors may be used to
-//   endorse or promote products derived from this software without specific prior written
-//   permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &AS IS& AND ANY EXPRESS
-// OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
-// AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-// CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-// DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
-// IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
-// OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
 using System.Windows.Forms;
 
-
 namespace FiCSharpScriptEditor
 {
-	public partial class MainForm : Form
+    public partial class MainForm : Form
 	{
-		public MainForm()
+        public delegate void TabSelectChangeDelegate(string strTabName);
+        public static event TabSelectChangeDelegate TabSelectChangeEvent;
+
+        public MainForm()
 		{
 			InitializeComponent();
+			this.fileTabControl.SelectedIndexChanged += this.FileTabControlSelectedIndexChanged;
 		}
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -46,9 +20,127 @@ namespace FiCSharpScriptEditor
 
         }
 
-        private void FileTabControlSelectedIndexChanged(object sender, EventArgs e)
-        {
+		private void FileTabControlSelectedIndexChanged(object sender, EventArgs e)
+		{
+			int index = this.fileTabControl.SelectedIndex;
 
+			if (this.fileTabControl.SelectedTab != null)
+			{
+				TabSelectChangeEvent(this.fileTabControl.SelectedTab.Text);
+				TabSelectChangeEvent?.Invoke(this.fileTabControl.SelectedTab.Text);
+			}
+		}
+
+		public FiCodeEditor ActiveFiCodeEditor => this.ActiveFiEditorTabPage?.FiCodeEditor;
+
+		public FiCodeEditorTabPage ActiveFiEditorTabPage => this.fileTabControl.SelectedTab as FiCodeEditorTabPage;
+
+		public FiCodeEditor GetFiCodeEditor(string name)
+		{
+			foreach (TabPage tabPage in this.fileTabControl.TabPages)
+			{
+				FiCodeEditorTabPage fiEditorTabPage = tabPage as FiCodeEditorTabPage;
+				if (fiEditorTabPage.Text == name)
+				{
+					return fiEditorTabPage.FiCodeEditor;
+				}
+			}
+
+			return null;
+		}
+
+		public void TaskFileOpen(string csFileFullName)
+		{
+            if (!File.Exists(csFileFullName))
+            {
+				return;
+            }
+
+			string name = Path.GetFileName(csFileFullName);
+
+			bool bExist = this.fileTabControl.TabPages.ContainsKey(name);
+			if (!bExist)
+			{
+				LoadFile(csFileFullName);
+			}
+			else 
+			{
+				FiCodeEditorTabPage fiCodeEditorTabPage = this.fileTabControl.TabPages[name] as FiCodeEditorTabPage;
+				this.fileTabControl.SelectedTab = fiCodeEditorTabPage;
+			}
+		}
+
+		public void LoadFile(string csFileFullName)
+		{
+			// Create a new tab page.
+			FiCodeEditor fiCodeEditor = new FiCodeEditor();
+
+			FiCodeEditorTabPage fiCodeEditorTabPage = new FiCodeEditorTabPage(fiCodeEditor);
+			string name = Path.GetFileName(csFileFullName);
+			fiCodeEditorTabPage.Text = name;
+
+			this.fileTabControl.TabPages.Add(fiCodeEditorTabPage);
+
+			// Load file
+			fiCodeEditor.Initialize();
+			fiCodeEditor.LoadFile(csFileFullName);
+			fiCodeEditor.Focus();
+		}
+
+		public void Save() 
+		{
+			foreach (FiCodeEditorTabPage fiCodeEditorTabPage in this.fileTabControl.TabPages)
+			{
+				fiCodeEditorTabPage.FiCodeEditor.SaveFile();
+			}
+		}
+
+        private void referencesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ReferenceForm referenceForm = new ReferenceForm();
+            referenceForm.ShowDialog();
         }
+
+        private void fileOpenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			using (OpenFileDialog dialog = new OpenFileDialog())
+			{
+				dialog.CheckFileExists = true;
+				dialog.Filter = "cs(*.cs)|*.cs";
+				if (dialog.ShowDialog() == DialogResult.OK)
+				{
+					foreach (string fileName in dialog.FileNames)
+					{
+						LoadFile(fileName);
+					}
+				}
+			}
+		}
+
+        private void 格式化ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.ActiveFiCodeEditor != null)
+            {
+				this.ActiveFiCodeEditor.Text = CSharpFormatHelper.FormatCSharpCode(this.ActiveFiCodeEditor.Text);
+			}
+		}
+
+        private void undoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			this.ActiveFiCodeEditor?.Undo();
+		}
+
+        private void redoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			this.ActiveFiCodeEditor?.Redo();
+		}
+
+        private void fileCloseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			if (this.ActiveFiEditorTabPage != null)
+			{
+				this.fileTabControl.TabPages.Remove(this.ActiveFiEditorTabPage);
+			}
+		}
     }
 }

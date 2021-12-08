@@ -56,9 +56,9 @@
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 85F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1336, 756);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1154, 564);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // tableLayoutPanel2
@@ -80,7 +80,7 @@
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1328, 105);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1146, 104);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // btSave
@@ -88,10 +88,10 @@
             this.btSave.BackColor = System.Drawing.Color.DeepSkyBlue;
             this.btSave.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btSave.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btSave.Location = new System.Drawing.Point(535, 5);
+            this.btSave.Location = new System.Drawing.Point(463, 5);
             this.btSave.Margin = new System.Windows.Forms.Padding(5);
             this.btSave.Name = "btSave";
-            this.btSave.Size = new System.Drawing.Size(255, 95);
+            this.btSave.Size = new System.Drawing.Size(219, 94);
             this.btSave.TabIndex = 26;
             this.btSave.Text = "保存";
             this.btSave.UseVisualStyleBackColor = false;
@@ -102,10 +102,10 @@
             this.btReferenceGAC.BackColor = System.Drawing.Color.DeepSkyBlue;
             this.btReferenceGAC.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btReferenceGAC.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btReferenceGAC.Location = new System.Drawing.Point(270, 5);
+            this.btReferenceGAC.Location = new System.Drawing.Point(234, 5);
             this.btReferenceGAC.Margin = new System.Windows.Forms.Padding(5);
             this.btReferenceGAC.Name = "btReferenceGAC";
-            this.btReferenceGAC.Size = new System.Drawing.Size(255, 95);
+            this.btReferenceGAC.Size = new System.Drawing.Size(219, 94);
             this.btReferenceGAC.TabIndex = 23;
             this.btReferenceGAC.Text = "引用系统dll";
             this.btReferenceGAC.UseVisualStyleBackColor = false;
@@ -119,7 +119,7 @@
             this.btReferenceLocal.Location = new System.Drawing.Point(5, 5);
             this.btReferenceLocal.Margin = new System.Windows.Forms.Padding(5);
             this.btReferenceLocal.Name = "btReferenceLocal";
-            this.btReferenceLocal.Size = new System.Drawing.Size(255, 95);
+            this.btReferenceLocal.Size = new System.Drawing.Size(219, 94);
             this.btReferenceLocal.TabIndex = 22;
             this.btReferenceLocal.Text = "引用本地dll";
             this.btReferenceLocal.UseVisualStyleBackColor = false;
@@ -130,10 +130,10 @@
             this.btClose.BackColor = System.Drawing.Color.Tomato;
             this.btClose.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btClose.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btClose.Location = new System.Drawing.Point(1065, 5);
+            this.btClose.Location = new System.Drawing.Point(921, 5);
             this.btClose.Margin = new System.Windows.Forms.Padding(5);
             this.btClose.Name = "btClose";
-            this.btClose.Size = new System.Drawing.Size(258, 95);
+            this.btClose.Size = new System.Drawing.Size(220, 94);
             this.btClose.TabIndex = 25;
             this.btClose.Text = "关闭";
             this.btClose.UseVisualStyleBackColor = false;
@@ -144,10 +144,10 @@
             this.btDelete.BackColor = System.Drawing.Color.Tomato;
             this.btDelete.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btDelete.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btDelete.Location = new System.Drawing.Point(800, 5);
+            this.btDelete.Location = new System.Drawing.Point(692, 5);
             this.btDelete.Margin = new System.Windows.Forms.Padding(5);
             this.btDelete.Name = "btDelete";
-            this.btDelete.Size = new System.Drawing.Size(255, 95);
+            this.btDelete.Size = new System.Drawing.Size(219, 94);
             this.btDelete.TabIndex = 24;
             this.btDelete.Text = "删除";
             this.btDelete.UseVisualStyleBackColor = false;
@@ -163,11 +163,11 @@
             this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listView1.FullRowSelect = true;
             this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(4, 117);
+            this.listView1.Location = new System.Drawing.Point(4, 116);
             this.listView1.Margin = new System.Windows.Forms.Padding(4);
             this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(1328, 635);
+            this.listView1.Size = new System.Drawing.Size(1146, 444);
             this.listView1.TabIndex = 1;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -196,14 +196,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(1336, 756);
+            this.ClientSize = new System.Drawing.Size(1154, 564);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "ReferenceForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "ReferenceForm";
             this.Load += new System.EventHandler(this.ReferenceForm_Load);
             this.tableLayoutPanel1.ResumeLayout(false);

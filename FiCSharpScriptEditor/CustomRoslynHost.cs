@@ -13,7 +13,8 @@ namespace FiCSharpScriptEditor
 {
     class CustomRoslynHost : RoslynHost
     {
-        public CustomRoslynHost(IEnumerable<Assembly> additionalAssemblies,RoslynHostReferences references) :base(additionalAssemblies: additionalAssemblies,references: references,disabledDiagnostics: null)
+        public CustomRoslynHost(IEnumerable<Assembly> additionalAssemblies,RoslynHostReferences references) 
+            :base(additionalAssemblies: additionalAssemblies,references: references)
         {
 
         }

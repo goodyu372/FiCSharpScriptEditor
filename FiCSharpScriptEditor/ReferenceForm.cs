@@ -43,8 +43,9 @@ namespace FiCSharpScriptEditor
 
             foreach (ColumnHeader column in this.listView1.Columns)
             {
-                column.Width = -2;
+                column.Width = -2; //调整宽度 自适应长度显示
             }
+
             this.listView1.EndUpdate();  //结束数据处理，UI界面一次性绘制。
         }
 
@@ -54,7 +55,7 @@ namespace FiCSharpScriptEditor
             dialog.Multiselect = true;//该值确定是否可以选择多个文件
             dialog.Title = "请选择dll";
             dialog.Filter = "dll(*.dll)|*.dll";
-            dialog.InitialDirectory = @"D:\Fi";
+            dialog.InitialDirectory = ReferenceManager.Local_Reference_Directory;
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 string[] files = dialog.FileNames;
@@ -72,7 +73,7 @@ namespace FiCSharpScriptEditor
             dialog.Multiselect = true;//该值确定是否可以选择多个文件
             dialog.Title = "请选择dll";
             dialog.Filter = "dll(*.dll)|*.dll";
-            dialog.InitialDirectory = @"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\";
+            dialog.InitialDirectory = ReferenceManager.System_GAC_Reference_Directory;
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 string[] files = dialog.FileNames;

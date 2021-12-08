@@ -16,7 +16,7 @@ namespace FiCSharpScriptEditor
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ReferenceForm());
+            Application.Run(new MainForm());
         }
     }
 }
