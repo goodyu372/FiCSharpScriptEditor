@@ -15,18 +15,10 @@ namespace FiCSharpScriptEditor
 			this.fileTabControl.SelectedIndexChanged += this.FileTabControlSelectedIndexChanged;
 		}
 
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-
-        }
-
 		private void FileTabControlSelectedIndexChanged(object sender, EventArgs e)
 		{
-			int index = this.fileTabControl.SelectedIndex;
-
 			if (this.fileTabControl.SelectedTab != null)
 			{
-				TabSelectChangeEvent(this.fileTabControl.SelectedTab.Text);
 				TabSelectChangeEvent?.Invoke(this.fileTabControl.SelectedTab.Text);
 			}
 		}
