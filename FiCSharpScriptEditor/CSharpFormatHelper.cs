@@ -38,7 +38,7 @@ namespace FiCSharpScriptEditor
         public static string FormatCSharpCode(string code)
         {
             //去除空白行
-            code = RemoveEmptyLines(code);
+            //code = RemoveEmptyLines(code);
             StringBuilder sb = new StringBuilder();
             int count = 2;
             int times = 0;
