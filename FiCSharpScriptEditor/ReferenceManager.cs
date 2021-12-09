@@ -48,7 +48,7 @@ namespace FiCSharpScriptEditor
             typeof(System.Drawing.Point), //System.Drawing.dll
             typeof(System.Drawing.Color), //System.Drawing.dll
             typeof(System.Windows.Forms.Form), //System.Windows.Forms.dll
-            typeof(System.Collections.Generic.List<int>),  //mscorlib.dll  (System.Collections.Generic),
+            typeof(System.Collections.Generic.List<int>),  //mscorlib.dll
             typeof(System.Array), //mscorlib.dll
             typeof(System.Net.Sockets.Socket), //System.dll
             typeof(System.Net.Sockets.TcpClient), //System.dll
@@ -70,7 +70,7 @@ namespace FiCSharpScriptEditor
             UpdateReferencesList();
         }
 
-        public static void CheckExistReferences() 
+        public static void CheckReferencesExist() 
         {
             foreach (var item in ListReferences)
             {
@@ -144,7 +144,7 @@ namespace FiCSharpScriptEditor
                     Type type = typeof(List<ReferenceItem>);
                     XmlSerializer serializer = new XmlSerializer(type);
                     ListReferences = serializer.Deserialize(fs) as List<ReferenceItem>;
-                    CheckExistReferences();
+                    CheckReferencesExist();
                 }
                 bInitialized = true;
             }
