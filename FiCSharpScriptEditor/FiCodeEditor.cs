@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Interop;
@@ -37,13 +38,13 @@ namespace FiCSharpScriptEditor
         /// Initialise: configures and shows a Roslyn code editor. 
         /// A default set of namespaces and assemblies are automatically used.
         /// </summary>
-        public void Initialize()
+        public async Task Initialize()
         {
             if (!ReferenceManager.bInitialized)
             {
                 ReferenceManager.LoadData();
             }
-            Initialize(assemblyReferences: ReferenceManager.ListAssemblyReferences, null);
+            await Initialize(assemblyReferences: ReferenceManager.ListAssemblyReferences, null).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -52,7 +53,7 @@ namespace FiCSharpScriptEditor
         /// <param name="assemblyReferences">此列表中每种类型的程序集由编辑器会话引用。例如，mscorlib.dll将导致核心框架库被加载</param>
         /// <param name="typeNamespaceImports">此列表中的每种类型的名称空间将自动为每种类型提供。例如，发送typeof(int)将使System命名空间可用，这相当于在脚本顶部添加“using System”</param>
         /// <exception cref="ArgumentNullException">assemblyReferences不可以为null，typeNamespaceImports允许为null（用户必须在脚本顶部添加using命名空间）</exception>
-        public void Initialize(IEnumerable<Assembly> assemblyReferences, IEnumerable<Type> typeNamespaceImports)
+        public async Task Initialize(IEnumerable<Assembly> assemblyReferences, IEnumerable<Type> typeNamespaceImports)
         {
             if (assemblyReferences == null)
             {
@@ -115,8 +116,10 @@ namespace FiCSharpScriptEditor
                 assemblyReferences = assemblyReferences.Union(assemblies2).Distinct();
             }
 
-            var roslynHost = CreateRosylnHost(assemblyReferences, typeNamespaceImports);
+            //耗时创建RosylnHost
+            var roslynHost = await Task.Run(() => CreateRosylnHost(assemblyReferences, typeNamespaceImports)).ConfigureAwait(true);
 
+            //耗时UI初始化
             CreateNewEditor(roslynHost);
 
             this.foldingManager = FoldingManager.Install(this.editor.TextArea);
@@ -125,9 +128,9 @@ namespace FiCSharpScriptEditor
             this.isInitialised = true;
         }
 
-        private static CustomRoslynHost CreateRosylnHost(IEnumerable<Assembly> assemblyReferences, IEnumerable<Type> typeNamespaceImports)
+        private static CustomRoslynHost CreateCustomRosylnHost(IEnumerable<Assembly> assemblyReferences, IEnumerable<Type> typeNamespaceImports)
         {
-            var roslynHostReferences = RoslynHostReferences.Empty.With(assemblyReferences: assemblyReferences, typeNamespaceImports: typeNamespaceImports);
+            var roslynHostReferences = RoslynHostReferences.NamespaceDefault.With(assemblyReferences: assemblyReferences, typeNamespaceImports: typeNamespaceImports);
 
             var roslynHost = new CustomRoslynHost(additionalAssemblies: new[]
                 {
@@ -138,7 +141,20 @@ namespace FiCSharpScriptEditor
             return roslynHost;
         }
 
-        private void CreateNewEditor(CustomRoslynHost roslynHost)
+        private static RoslynHost CreateRosylnHost(IEnumerable<Assembly> assemblyReferences, IEnumerable<Type> typeNamespaceImports)
+        {
+            var roslynHostReferences = RoslynHostReferences.NamespaceDefault.With(assemblyReferences: assemblyReferences, typeNamespaceImports: typeNamespaceImports);
+
+            var roslynHost = new RoslynHost(additionalAssemblies: new[]
+                {
+                    Assembly.Load("RoslynPad.Roslyn.Windows"),
+                    Assembly.Load("RoslynPad.Editor.Windows"),  //这两句必加
+                }, references: roslynHostReferences);
+
+            return roslynHost;
+        }
+
+        private void CreateNewEditor(RoslynHost roslynHost)
         {
             var workingDirectory = Directory.GetCurrentDirectory();
 
@@ -156,6 +172,7 @@ namespace FiCSharpScriptEditor
             this.wpfEditorHost.Visible = true;
             this.wpfEditorHost.Child = this.editor;
         }
+
 
         /// <summary>
         /// 关闭编辑器
@@ -188,7 +205,7 @@ namespace FiCSharpScriptEditor
 
         public bool SaveFile()
         {
-            return this.editor.SaveFile();
+           return this.editor.SaveFile();
         }
 
         public string Text 

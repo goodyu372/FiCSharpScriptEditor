@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace FiCSharpScriptEditor
@@ -41,7 +42,7 @@ namespace FiCSharpScriptEditor
 			return null;
 		}
 
-		public void OpenOrLoadFile(string csFileFullName)
+		public async Task OpenOrLoadFile(string csFileFullName)
 		{
             if (!File.Exists(csFileFullName))
             {
@@ -49,20 +50,19 @@ namespace FiCSharpScriptEditor
             }
 
 			string name = Path.GetFileName(csFileFullName);
+            foreach (FiCodeEditorTabPage page in this.fileTabControl.TabPages)
+            {
+				if (page.Text == name)
+				{
+					this.fileTabControl.SelectedTab = page;
+					return;
+				}
+			}
 
-			bool bExist = this.fileTabControl.TabPages.ContainsKey(name);
-			if (!bExist)
-			{
-				LoadFile(csFileFullName);
-			}
-			else 
-			{
-				FiCodeEditorTabPage fiCodeEditorTabPage = this.fileTabControl.TabPages[name] as FiCodeEditorTabPage;
-				this.fileTabControl.SelectedTab = fiCodeEditorTabPage;
-			}
+			await LoadFile(csFileFullName);
 		}
 
-		public void LoadFile(string csFileFullName)
+		private async Task LoadFile(string csFileFullName)
 		{
 			// Create a new tab page.
 			FiCodeEditor fiCodeEditor = new FiCodeEditor();
@@ -75,21 +75,20 @@ namespace FiCSharpScriptEditor
 			this.fileTabControl.SelectedTab = fiCodeEditorTabPage;
 
 			// Load file
-			fiCodeEditor.Initialize();
+			await fiCodeEditor.Initialize().ConfigureAwait(true);
 			fiCodeEditor.LoadFile(csFileFullName);
-			fiCodeEditor.Focus();
 		}
 
 		private void Save()
 		{
-			this.ActiveFiCodeEditor?.SaveFile();
+			 this.ActiveFiCodeEditor?.SaveFile();
 		}
 
 		public void SaveAll() 
 		{
 			foreach (FiCodeEditorTabPage fiCodeEditorTabPage in this.fileTabControl.TabPages)
 			{
-				fiCodeEditorTabPage.FiCodeEditor.SaveFile();
+				 fiCodeEditorTabPage.FiCodeEditor.SaveFile();
 			}
 		}
 
@@ -99,7 +98,7 @@ namespace FiCSharpScriptEditor
             referenceForm.ShowDialog();
         }
 
-        private void fileOpenToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void fileOpenToolStripMenuItem_Click(object sender, EventArgs e)
         {
 			using (OpenFileDialog dialog = new OpenFileDialog())
 			{
@@ -109,7 +108,7 @@ namespace FiCSharpScriptEditor
 				{
 					foreach (string fileName in dialog.FileNames)
 					{
-						LoadFile(fileName);
+						await OpenOrLoadFile(fileName);
 					}
 				}
 			}
