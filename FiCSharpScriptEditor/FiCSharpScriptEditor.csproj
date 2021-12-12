@@ -234,6 +234,14 @@
     <None Include="Resources\锁.png" />
     <None Include="Resources\删除2.png" />
     <None Include="Resources\删除3.png" />
+    <None Include="Resources\信.png" />
+    <None Include="Resources\图书.png" />
+    <None Include="Resources\编辑.png" />
+    <None Include="Resources\列表.png" />
+    <None Include="Resources\列表2.png" />
+    <None Include="Resources\字体.png" />
+    <None Include="Resources\段落符号.png" />
+    <None Include="Resources\段落符号2.png" />
     <Content Include="井字标签.ico" />
     <None Include="Resources\书.png" />
     <None Include="Resources\井字标签.ico" />

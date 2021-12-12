@@ -79,11 +79,6 @@ namespace FiCSharpScriptEditor
 			fiCodeEditor.LoadFile(csFileFullName);
 		}
 
-		private void Save()
-		{
-			 this.ActiveFiCodeEditor?.SaveFile();
-		}
-
 		public void SaveAll() 
 		{
 			foreach (FiCodeEditorTabPage fiCodeEditorTabPage in this.fileTabControl.TabPages)
@@ -114,16 +109,24 @@ namespace FiCSharpScriptEditor
 			}
 		}
 
-        private void 格式化ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (this.ActiveFiCodeEditor != null)
-            {
-				string formatText = CSharpFormatHelper.FormatCSharpCode(this.ActiveFiCodeEditor.Text);
-                if (this.ActiveFiCodeEditor.Text != formatText)
-                {
-					this.ActiveFiCodeEditor.Text = formatText;
-				}
+		private void fileCloseToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (this.ActiveFiEditorTabPage != null)
+			{
+				this.fileTabControl.TabPages.Remove(this.ActiveFiEditorTabPage);
 			}
+		}
+		private void 保存ToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			this.ActiveFiCodeEditor?.SaveFile();
+		}
+
+		private async void 格式化ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			if (this.ActiveFiCodeEditor == null)
+				return;
+
+			await this.ActiveFiCodeEditor.FormatDocumentAsync();
 		}
 
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)
@@ -136,17 +139,20 @@ namespace FiCSharpScriptEditor
 			this.ActiveFiCodeEditor?.Redo();
 		}
 
-        private void fileCloseToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void 注释ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-			if (this.ActiveFiEditorTabPage != null)
-			{
-				this.fileTabControl.TabPages.Remove(this.ActiveFiEditorTabPage);
-			}
+            if (this.ActiveFiCodeEditor == null)
+				return;
+
+			await this.ActiveFiCodeEditor.CommentUncommentSelectionAsync(CommentAction.Comment);
 		}
 
-        private void 保存ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Save();
-        }
+        private async void 取消注释ToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (this.ActiveFiCodeEditor == null)
+				return;
+
+			await this.ActiveFiCodeEditor.CommentUncommentSelectionAsync(CommentAction.Uncomment);
+		}
     }
 }

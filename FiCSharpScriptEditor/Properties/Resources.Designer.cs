@@ -103,6 +103,16 @@ namespace FiCSharpScriptEditor.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap 信 {
+            get {
+                object obj = ResourceManager.GetObject("信", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap 信箱 {
             get {
                 object obj = ResourceManager.GetObject("信箱", resourceCulture);
@@ -116,6 +126,26 @@ namespace FiCSharpScriptEditor.Properties {
         internal static System.Drawing.Bitmap 关闭 {
             get {
                 object obj = ResourceManager.GetObject("关闭", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap 列表 {
+            get {
+                object obj = ResourceManager.GetObject("列表", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap 列表2 {
+            get {
+                object obj = ResourceManager.GetObject("列表2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -153,6 +183,26 @@ namespace FiCSharpScriptEditor.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap 图书 {
+            get {
+                object obj = ResourceManager.GetObject("图书", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap 字体 {
+            get {
+                object obj = ResourceManager.GetObject("字体", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap 左对齐 {
             get {
                 object obj = ResourceManager.GetObject("左对齐", resourceCulture);
@@ -166,6 +216,36 @@ namespace FiCSharpScriptEditor.Properties {
         internal static System.Drawing.Bitmap 左箭头 {
             get {
                 object obj = ResourceManager.GetObject("左箭头", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap 段落符号 {
+            get {
+                object obj = ResourceManager.GetObject("段落符号", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap 段落符号2 {
+            get {
+                object obj = ResourceManager.GetObject("段落符号2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap 编辑 {
+            get {
+                object obj = ResourceManager.GetObject("编辑", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

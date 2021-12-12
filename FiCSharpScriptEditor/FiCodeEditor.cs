@@ -1,5 +1,8 @@
 ﻿using ICSharpCode.AvalonEdit.Folding;
 using ICSharpCode.AvalonEdit.Highlighting;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.Formatting;
+using Microsoft.CodeAnalysis.Text;
 using RoslynPad.Editor;
 using RoslynPad.Roslyn;
 using System;
@@ -27,7 +30,10 @@ namespace FiCSharpScriptEditor
         private BraceFoldingStrategy foldingStrategy;  //允许基于大括号从文档中生成折叠.
 
         private RoslynCodeEditor editor;
-        private bool isInitialised;
+        private RoslynHost roslynHost;
+        private DocumentId documentId;
+
+        private bool isInitialized;
 
         public FiCodeEditor()
         {
@@ -117,19 +123,22 @@ namespace FiCSharpScriptEditor
             }
 
             //耗时创建RosylnHost
-            var roslynHost = await Task.Run(() => CreateRosylnHost(assemblyReferences, typeNamespaceImports)).ConfigureAwait(true);
+            this.roslynHost = await Task.Run(() => CreateRosylnHost(assemblyReferences, typeNamespaceImports)).ConfigureAwait(true);
 
             //耗时UI初始化
-            CreateNewEditor(roslynHost);
+            CreateNewEditor(this.roslynHost);
 
             this.foldingManager = FoldingManager.Install(this.editor.TextArea);
             this.foldingStrategy = new BraceFoldingStrategy();
 
-            this.isInitialised = true;
+            this.isInitialized = true;
         }
 
         private static CustomRoslynHost CreateCustomRosylnHost(IEnumerable<Assembly> assemblyReferences, IEnumerable<Type> typeNamespaceImports)
         {
+            //var Imports = typeNamespaceImports.Select(p=>p.Namespace).Distinct();
+            //var FinalImports = RoslynHostReferences.NamespaceDefault.Imports.Union(Imports).Distinct();
+
             var roslynHostReferences = RoslynHostReferences.NamespaceDefault.With(assemblyReferences: assemblyReferences, typeNamespaceImports: typeNamespaceImports);
 
             var roslynHost = new CustomRoslynHost(additionalAssemblies: new[]
@@ -143,6 +152,9 @@ namespace FiCSharpScriptEditor
 
         private static RoslynHost CreateRosylnHost(IEnumerable<Assembly> assemblyReferences, IEnumerable<Type> typeNamespaceImports)
         {
+            //var Imports = typeNamespaceImports.Select(p => p.Namespace).Distinct();
+            //var FinalImports = RoslynHostReferences.NamespaceDefault.Imports.Union(Imports).Distinct();
+
             var roslynHostReferences = RoslynHostReferences.NamespaceDefault.With(assemblyReferences: assemblyReferences, typeNamespaceImports: typeNamespaceImports);
 
             var roslynHost = new RoslynHost(additionalAssemblies: new[]
@@ -159,7 +171,7 @@ namespace FiCSharpScriptEditor
             var workingDirectory = Directory.GetCurrentDirectory();
 
             this.editor = new RoslynCodeEditor();
-            this.editor.Initialize(roslynHost: roslynHost, highlightColors: new ClassificationHighlightColors(), workingDirectory: workingDirectory, documentText: String.Empty);
+            this.documentId = this.editor.Initialize(roslynHost: roslynHost, highlightColors: new ClassificationHighlightColors(), workingDirectory: workingDirectory, documentText: String.Empty);
 
             this.editor.IsBraceCompletionEnabled = true;
             this.editor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("C#");
@@ -173,29 +185,101 @@ namespace FiCSharpScriptEditor
             this.wpfEditorHost.Child = this.editor;
         }
 
-
         /// <summary>
         /// 关闭编辑器
         /// </summary>
         public void Uninitialise()
         {
-            if(!this.isInitialised) { return; }
+            if(!this.isInitialized) { return; }
 
             this.editor.TextChanged -= Editor_TextChanged;
             this.editor = null;
+            this.roslynHost = null;
+            this.documentId = null;
 
             this.wpfEditorHost.Visible = false;
             this.wpfEditorHost.Child = null;
 
-            this.isInitialised = false;
+            this.isInitialized = false;
         }
 
         private void Editor_TextChanged(object sender, EventArgs e)
         {
-            if (this.isInitialised && this.foldingManager != null) //触发一次代码折叠
+            if (this.isInitialized && this.foldingManager != null) //触发一次代码折叠
             {
                 this.foldingStrategy.UpdateFoldings(foldingManager, editor.Document);
             }
+        }
+
+        const string singleLineCommentString = "//";
+
+        /// <summary>
+        /// 注释或取消注释选中内容
+        /// </summary>
+        /// <param name="action"></param>
+        /// <returns></returns>
+        public async Task CommentUncommentSelectionAsync(CommentAction action) 
+        {
+            var document = this.roslynHost?.GetDocument(this.documentId);
+            if (document == null)
+            {
+                return;
+            }
+
+            TextSpan selection = new TextSpan(this.editor.SelectionStart, this.editor.SelectionLength); //获取选中内容
+
+            var documentText = await document.GetTextAsync().ConfigureAwait(false);
+            var changes = new List<TextChange>();
+            var lines = documentText.Lines.SkipWhile(x => !x.Span.IntersectsWith(selection))
+               .TakeWhile(x => x.Span.IntersectsWith(selection)).ToArray();
+
+            if (action == CommentAction.Comment)
+            {
+                foreach (var line in lines)
+                {
+                    if (!string.IsNullOrWhiteSpace(documentText.GetSubText(line.Span).ToString()))
+                    {
+                        changes.Add(new TextChange(new TextSpan(line.Start, 0), singleLineCommentString));
+                    }
+                }
+            }
+            else if (action == CommentAction.Uncomment)
+            {
+                foreach (var line in lines)
+                {
+                    var text = documentText.GetSubText(line.Span).ToString();
+                    if (text.TrimStart().StartsWith(singleLineCommentString, StringComparison.Ordinal))
+                    {
+                        changes.Add(new TextChange(new TextSpan(
+                            line.Start + text.IndexOf(singleLineCommentString, StringComparison.Ordinal),
+                            singleLineCommentString.Length), string.Empty));
+                    }
+                }
+            }
+
+            if (changes.Count == 0) return;
+
+            this.roslynHost.UpdateDocument(document.WithText(documentText.WithChanges(changes)));
+            if (action == CommentAction.Uncomment)
+            {
+                await FormatDocumentAsync().ConfigureAwait(false);
+            }
+        }
+
+        /// <summary>
+        /// 格式化文档
+        /// </summary>
+        /// <returns></returns>
+        public async Task FormatDocumentAsync()
+        {
+            var document = this.roslynHost?.GetDocument(this.documentId);
+            if (document == null)
+            {
+                return;
+            }
+
+            var formattedDocument = await Formatter.FormatAsync(document).ConfigureAwait(false);
+            this.roslynHost.UpdateDocument(formattedDocument);
         }
 
         public void LoadFile(string csFileFullName) 
@@ -219,5 +303,11 @@ namespace FiCSharpScriptEditor
         public void Redo() => this.editor.Redo();
 
         public void Undo() => this.editor.Undo();
+    }
+
+    public enum CommentAction
+    {
+        Comment,
+        Uncomment
     }
 }
